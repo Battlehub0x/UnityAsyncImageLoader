@@ -1,7 +1,9 @@
 public partial class AsyncImageLoader {
   interface IPixel<TChannel> where TChannel : struct {
-    static int ChannelCount() => throw new System.NotImplementedException();
-    static int ChannelByteCount() => throw new System.NotImplementedException();
+#if NETSTANDARD
+        static int ChannelCount() => throw new System.NotImplementedException();
+        static int ChannelByteCount() => throw new System.NotImplementedException();
+#endif
   }
 
   struct R16Pixel : IPixel<short> {
