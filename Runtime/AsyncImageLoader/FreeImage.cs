@@ -169,6 +169,39 @@ public static partial class AsyncImageLoader {
       /// </summary>
       RAW_DISPLAY = 0x2,
     }
+	
+	public enum Filter
+	{
+	  /// <summary>
+	  /// Box, pulse, Fourier window, 1st order (constant) b-spline
+	  /// </summary>
+	  FILTER_BOX = 0,
+
+	  /// <summary>
+	  /// Mitchell & Netravali's two-param cubic filter
+	  /// </summary>
+	  FILTER_BICUBIC = 1,
+
+	  /// <summary>
+	  /// ! Bilinear filter
+	  /// </summary>
+	  FILTER_BILINEAR = 2,
+
+	  /// <summary>
+	  /// ! 4th order (cubic) b-spline
+	  /// </summary>
+	  FILTER_BSPLINE = 3,
+
+	  /// <summary>
+	  /// ! Catmull-Rom spline, Overhauser spline
+	  /// </summary>
+	  FILTER_CATMULLROM = 4,
+
+	  /// <summary>
+	  /// ! Lanczos3 filter
+	  /// </summary>
+	  FILTER_LANCZOS3 = 5
+	};
 
     const string FreeImageLibrary = "FreeImage";
 
@@ -213,5 +246,8 @@ public static partial class AsyncImageLoader {
 
     [DllImport(FreeImageLibrary, EntryPoint = "FreeImage_GetPitch")]
     internal static extern int GetPitch(IntPtr dib);
+	
+	[DllImport(FreeImageLibrary, EntryPoint = "FreeImage_Rescale")]
+	internal static extern IntPtr Rescale(IntPtr dib, int dst_width, int dst_height, Filter filter = Filter.FILTER_CATMULLROM);
   }
 }

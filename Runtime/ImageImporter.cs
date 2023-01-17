@@ -49,8 +49,28 @@ public static partial class AsyncImageLoader {
           }
 
           _bitmap = FreeImage.LoadFromMemory(_loaderSettings.format, memoryStream, (int)FreeImage.LoadFlags.JPEG_ACCURATE);
-          _width = (int)FreeImage.GetWidth(_bitmap);
-          _height = (int)FreeImage.GetHeight(_bitmap);
+		  _width = (int)FreeImage.GetWidth(_bitmap);
+		  _height = (int)FreeImage.GetHeight(_bitmap);
+
+	      int desiredWidth = _loaderSettings.desiredWidth;
+          int desiredHeight = _loaderSettings.desiredHeight;
+		  if (desiredWidth > 0 && desiredHeight > 0)
+		  {
+			float aspectRatio = _width / (float)max(1, _height);
+			desiredHeight = (int)(desiredHeight / aspectRatio);
+			if (desiredWidth > 0 && desiredHeight > 0)
+			{
+			  var unload = _bitmap;
+			  _bitmap = FreeImage.Rescale(_bitmap, desiredWidth, desiredHeight);
+			  _width = (int)FreeImage.GetWidth(_bitmap);
+			  _height = (int)FreeImage.GetHeight(_bitmap);
+			  if (unload != IntPtr.Zero)
+			  {
+				FreeImage.Unload(unload);
+				unload = IntPtr.Zero;
+			  }
+			}
+		  }
           _imageBitsPerPixel = FreeImage.GetBPP(_bitmap);
           _imageType = FreeImage.GetImageType(_bitmap);
 

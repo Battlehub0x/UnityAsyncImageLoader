@@ -127,6 +127,12 @@ public static partial class AsyncImageLoader {
     public FreeImage.Format format;
     /// <summary>Whether or not to log exception caught by this method. Defaults to true.</summary>
     public bool logException;
+	
+	public int desiredWidth;
+
+	public int desiredHeight;
+
+	public bool preserveAspect;
 
     public static LoaderSettings Default => new LoaderSettings {
       linear = false,
@@ -135,6 +141,9 @@ public static partial class AsyncImageLoader {
       autoMipmapCount = true,
       format = FreeImage.Format.FIF_UNKNOWN,
       logException = true,
+	  desiredWidth = -1,
+	  desiredHeight = -1,
+      preserveAspect = true
     };
   }
 }
