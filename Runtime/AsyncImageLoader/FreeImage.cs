@@ -248,6 +248,6 @@ public static partial class AsyncImageLoader {
     internal static extern int GetPitch(IntPtr dib);
 	
 	[DllImport(FreeImageLibrary, EntryPoint = "FreeImage_Rescale")]
-	internal static extern IntPtr Rescale(IntPtr dib, int dst_width, int dst_height, Filter filter = Filter.FILTER_CATMULLROM);
+	internal static extern IntPtr Rescale(IntPtr dib, int dst_width, int dst_height, Filter filter = Filter.FILTER_BOX);
   }
 }
